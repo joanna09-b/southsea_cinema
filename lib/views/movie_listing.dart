@@ -19,6 +19,7 @@ class MovieListing extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 16,
         children: const [
           Text(
             'INCEPTION (2010) (12A)',
@@ -28,14 +29,16 @@ class MovieListing extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 40),
           Text(
-            'Runtime: 148 minutes',
+            'Southsea Cinema Room',
           ),
-          SizedBox(height: 27),
           Text(
-            'A thief who steals secrets through dreams is given one last job.',
+            'Tuesday 10th October 2026, 18:30 - ends at 21:00',
           ),
+          Text(
+            '"A thief who steals secrets through dreams is given one last job."',
+          ),
+
         ],
       ),
     ),
