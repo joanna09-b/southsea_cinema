@@ -105,7 +105,10 @@ class _MovieListingState extends State<MovieListing> {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 ),
-                child: const Text('Add to Order'),
+                child: Text(
+                  'ADD TO ORDER \nYou ordered $totalTicket ticket${totalTicket == 1 ? '' : 's'}',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
