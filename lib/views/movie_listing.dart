@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
-class MovieListing extends StatelessWidget {
+class MovieListing extends StatefulWidget {
   const MovieListing({super.key});
+
+  @override
+  State<MovieListing> createState() {
+    return _MovieListingState();
+  }
+}
+
+class _MovieListingState extends State<MovieListing> {
+  int _tickets = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class MovieListing extends StatelessWidget {
       ),
     drawer: const NavDrawer(),
     body: Container(
-      color: const Color(0xFF1C1E26), // dark background like the example
+      color: const Color(0xFF1C1E26), 
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,10 +57,8 @@ class MovieListing extends StatelessWidget {
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
-          ),
-          SizedBox(height: 10),
-          
-          
+          )
+                
         ],
       ),
     ),
