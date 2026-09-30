@@ -70,7 +70,7 @@ class _MovieListingState extends State<MovieListing> {
                   textStyle: const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
                   inputDecorationTheme: const InputDecorationTheme(
                     filled: true,
-                    fillColor:  Colors.white),
+                    fillColor: Colors.white,
                   ),
                   onSelected: (int? value) {
                     if (value != null) {
