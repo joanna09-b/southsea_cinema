@@ -15,6 +15,10 @@ class _MovieListingState extends State<MovieListing> {
   int _ticketQuantity = 0;
   int totalTicket = 0;
 
+  int _ticketOrdered(int quantity) {
+    return quantity;
+  }
+
   
   
   @override
