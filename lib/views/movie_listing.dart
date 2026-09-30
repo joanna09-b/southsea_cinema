@@ -14,6 +14,8 @@ class MovieListing extends StatefulWidget {
 class _MovieListingState extends State<MovieListing> {
   int _ticketQuantity = 0;
   int totalTicket = 0;
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class _MovieListingState extends State<MovieListing> {
                   onSelected: (int? value) {
                     if (value != null) {
                       setState(() {
-                        _tickets = value;
+                        _ticketQuantity = value;
                       });
                     }
                   },
@@ -85,6 +87,17 @@ class _MovieListingState extends State<MovieListing> {
                 const SizedBox(width: 14),
                 const Text('Adult (£7.50)'),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    totalTicket = _ticketOrdered(_ticketQuantity);
+                  });
+                },
+                child: const Text('Update Total'),
+              ),
             ),
           ],
         ),
