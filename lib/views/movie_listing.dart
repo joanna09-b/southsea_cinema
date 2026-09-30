@@ -12,8 +12,9 @@ class MovieListing extends StatefulWidget {
 }
 
 class _MovieListingState extends State<MovieListing> {
-  int _tickets = 0;
-
+  int _ticketQuantity = 0;
+  int totalTicket = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
