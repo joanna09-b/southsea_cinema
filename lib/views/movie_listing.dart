@@ -70,7 +70,7 @@ class _MovieListingState extends State<MovieListing> {
                   textStyle: const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
                   inputDecorationTheme: const InputDecorationTheme(
                     filled: true,
-                    fillColor: Color.fromARGB(255, 255, 255, 255),
+                    fillColor:  Colors.white),
                   ),
                   onSelected: (int? value) {
                     if (value != null) {
@@ -100,6 +100,10 @@ class _MovieListingState extends State<MovieListing> {
                     totalTicket = _ticketOrdered(_ticketQuantity);
                   });
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cinemaBrand,
+                  foregroundColor: Colors.white,
+                ),
                 child: const Text('Update Total'),
               ),
             ),
