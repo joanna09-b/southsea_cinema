@@ -22,7 +22,7 @@ class MovieListing extends StatelessWidget {
         spacing: 16,
         children: const [
           Text(
-            'INCEPTION (2010) (12A)',
+            'Mission: Impossible - Fallout',
             style: TextStyle(
               color: cinemaFontWhite,
               fontSize: 24,
@@ -36,9 +36,22 @@ class MovieListing extends StatelessWidget {
             'Tuesday 10th October 2026, 18:30 - ends at 21:00',
           ),
           Text(
-            '"A thief who steals secrets through dreams is given one last job."',
+            '"Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission"',
           ),
-
+          Text('Please note that discounts / membership benefits will be applied once you have selected your tickets.'),
+          Text('Select Quantites (Up to 5 in total)'),
+          
+          Text(
+            'Tickets',
+            style: TextStyle(
+              color: cinemaFontWhite,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10),
+          
+          
         ],
       ),
     ),
