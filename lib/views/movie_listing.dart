@@ -19,8 +19,7 @@ class _MovieListingState extends State<MovieListing> {
     return quantity;
   }
 
-  
-  
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
