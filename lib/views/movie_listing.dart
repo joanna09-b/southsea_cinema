@@ -103,8 +103,9 @@ class _MovieListingState extends State<MovieListing> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: cinemaBrand,
                   foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 ),
-                child: const Text('Update Total'),
+                child: const Text('Add to Order'),
               ),
             ),
           ],
