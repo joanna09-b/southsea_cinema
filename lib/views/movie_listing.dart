@@ -18,7 +18,6 @@ class _MovieListingState extends State<MovieListing> {
   int _ticketOrdered(int quantity) {
     return quantity;
   }
-
     
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'Please note that discounts / membership benefits will be applied once you have selected your tickets.',
             ),
-            const Text('Select Quantites (Up to 5 in total)'),
+            const Text('Select Quantities (Up to 5 in total)'),
             const Text(
               'Tickets',
               style: TextStyle(
