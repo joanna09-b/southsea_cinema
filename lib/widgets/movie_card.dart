@@ -80,7 +80,6 @@ class MovieCard extends StatelessWidget {
                   ),
                 ),
 
-
                 ElevatedButton(
                   onPressed: () {},
                   child: const Text('Book Now'),
@@ -88,11 +87,7 @@ class MovieCard extends StatelessWidget {
                 
               ],
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Order'),
-            ),
+            
           ],
         ),
       ),
