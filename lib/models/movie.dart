@@ -11,7 +11,7 @@ class Movie {
   String get formattedPrice => '£${price.toStringAsFixed(2)}';
 
 
-  Movie({
+  const Movie({
     required this.id,
     required this.title,
     required this.description,
