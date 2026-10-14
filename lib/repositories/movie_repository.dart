@@ -7,7 +7,7 @@ class MovieRepository {
         id: 'MIF',
         title: 'Mission: Impossible - Fallout',
         description:
-            '"Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission"',
+            'Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission',
         ageRating: 'PG-13',
         date: 'Sunday 16th November 2026',
         time: '19:30',
@@ -18,7 +18,7 @@ class MovieRepository {
         id: 'rio',
         title: 'Rio',
         description:
-            '"Blu, a domesticated macaw from small-town Minnesota, takes off on an adventure to Rio de Janeiro with the bird of his dreams"',
+            'Blu, a domesticated macaw from small-town Minnesota, takes off on an adventure to Rio de Janeiro with the bird of his dreams',
         ageRating: 'G',
         date: 'Saturday 15th November 2026',
         time: '18:00',
@@ -26,5 +26,14 @@ class MovieRepository {
         price: 9.99,
       ),
     ];
+  }
+
+  Movie? getMovieById(String id) {
+    for (final movie in getMovies()) {
+      if (movie.id == id) {
+        return movie;
+      }
+    }
+    return null;
   }
 }
