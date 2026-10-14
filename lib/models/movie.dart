@@ -6,6 +6,7 @@ class Movie {
   final String ageRating;
   final String date;
   final String time;
+  final double price; 
 
 
   Movie({
@@ -16,5 +17,6 @@ class Movie {
     required this.ageRating,
     required this.date,
     required this.time,
+    required this.price, 
   });
 }
