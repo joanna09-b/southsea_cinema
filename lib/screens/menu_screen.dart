@@ -9,7 +9,7 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MovieRepository repository =MovieRepository();
+    final MovieRepository repository = MovieRepository();
     final List<Movie> movies = repository.getMovies();
 
     return Scaffold(
@@ -24,8 +24,5 @@ class MenuScreen extends StatelessWidget {
         },
       ),
     );
-    
-
-    
-    }
+  }
 }

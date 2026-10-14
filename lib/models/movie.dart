@@ -6,10 +6,9 @@ class Movie {
   final String ageRating;
   final String date;
   final String time;
-  final double price; 
+  final double price;
 
   String get formattedPrice => '£${price.toStringAsFixed(2)}';
-
 
   const Movie({
     required this.id,
@@ -19,6 +18,6 @@ class Movie {
     required this.ageRating,
     required this.date,
     required this.time,
-    required this.price, 
+    required this.price,
   });
 }

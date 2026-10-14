@@ -21,7 +21,7 @@ class _MovieListingState extends State<MovieListing> {
   int _ticketOrdered(int quantity) {
     return quantity;
   }
-    
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +38,12 @@ class _MovieListingState extends State<MovieListing> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
-             Text(
-               '${widget.movie.title} (${widget.movie.ageRating})',
+            Text(
+              '${widget.movie.title} (${widget.movie.ageRating})',
               style: const TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 24,
-                fontWeight: FontWeight.bold
-              ),
+                  color: cinemaFontWhite,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
             ),
             const Text('Southsea Cinema Room'),
             Text('${widget.movie.date} at ${widget.movie.time}'),
@@ -66,7 +65,8 @@ class _MovieListingState extends State<MovieListing> {
                 DropdownMenu<int>(
                   initialSelection: 0,
                   width: 100,
-                  textStyle: const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
+                  textStyle:
+                      const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
                   inputDecorationTheme: const InputDecorationTheme(
                     filled: true,
                     fillColor: Colors.white,
@@ -102,7 +102,8 @@ class _MovieListingState extends State<MovieListing> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: cinemaBrand,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                 ),
                 child: Text(
                   'ADD TO ORDER \nYou ordered $totalTicket ticket${totalTicket == 1 ? '' : 's'}',

@@ -5,7 +5,7 @@ import 'package:southsea_cinema/views/movie_listing.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
-  const MovieCard({super.key,required this.movie});
+  const MovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,8 @@ class MovieCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                
               ],
             ),
-
             const SizedBox(height: 24),
             const Text(
               'BOOK TICKETS',
@@ -59,11 +57,11 @@ class MovieCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                  '${movie.date}  ${movie.time}',
-                  style: const TextStyle(color: cinemaFontWhite, fontSize: 18),
+                    '${movie.date}  ${movie.time}',
+                    style:
+                        const TextStyle(color: cinemaFontWhite, fontSize: 18),
+                  ),
                 ),
-                ),
-
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -76,8 +74,9 @@ class MovieCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: cinemaBrand,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 16),
+                  ),
                   child: const Text('Book Now'),
                 ),
               ],

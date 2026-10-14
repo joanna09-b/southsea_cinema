@@ -28,8 +28,8 @@ void main() {
       expect(find.text('Book Now'), findsNWidgets(movies.length));
 
       for (final Movie movie in movies) {
-        expect(find.text('${movie.title} (${movie.ageRating})'),
-            findsOneWidget);
+        expect(
+            find.text('${movie.title} (${movie.ageRating})'), findsOneWidget);
       }
     });
   });
