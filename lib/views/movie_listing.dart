@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class MovieListing extends StatefulWidget {
-  const MovieListing({super.key});
+  final Movie movie;
+
+  const MovieListing({super.key, required this.movie});
 
   @override
   State<MovieListing> createState() {
@@ -35,12 +38,12 @@ class _MovieListingState extends State<MovieListing> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
-            const Text(
-              'Mission: Impossible - Fallout',
-              style: TextStyle(
+             Text(
+               '${widget.movie.title} (${widget.movie.ageRating})',
+              style: const TextStyle(
                 color: cinemaFontWhite,
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold
               ),
             ),
             const Text('Southsea Cinema Room'),
@@ -87,7 +90,9 @@ class _MovieListingState extends State<MovieListing> {
                   ],
                 ),
                 const SizedBox(width: 14),
-                const Text('Adult (£7.50)'),
+                const Text(
+                  'Adult (£9.99)',
+                ),
               ],
             ),
             Padding(
