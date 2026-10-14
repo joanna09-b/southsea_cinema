@@ -11,7 +11,7 @@ class MovieRepository {
         ageRating: 'PG-13',
         date: 'Sunday 16th November 2026',
         time: '19:30',
-        imagePath: 'images/MIF.jpeg',
+        imagePath: 'assets/images/MIF.jpeg',
         price: 12.99,
       ),
       Movie(
@@ -22,7 +22,7 @@ class MovieRepository {
         ageRating: 'G',
         date: 'Saturday 15th November 2026',
         time: '18:00',
-        imagePath: 'images/rio.jpeg',
+        imagePath: 'assets/images/rio.jpeg',
         price: 9.99,
       ),
     ];
