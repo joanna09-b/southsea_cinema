@@ -47,10 +47,8 @@ class _MovieListingState extends State<MovieListing> {
               ),
             ),
             const Text('Southsea Cinema Room'),
-            const Text('Tuesday 10th October 2026, 18:30 - ends at 21:00'),
-            const Text(
-              '"Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission"',
-            ),
+            Text('${widget.movie.date} at ${widget.movie.time}'),
+            Text('"${widget.movie.description}"'),
             const Text(
               'Please note that discounts / membership benefits will be applied once you have selected your tickets.',
             ),
