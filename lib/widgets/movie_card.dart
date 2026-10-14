@@ -73,14 +73,17 @@ class MovieCard extends StatelessWidget {
 
             Row(
               children: [
-                Text(
+                Expanded(
+                  child: Text(
                   '${movie.date} at ${movie.time}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.black54,
                   ),
                 ),
-
+                ),
+                
+                
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
