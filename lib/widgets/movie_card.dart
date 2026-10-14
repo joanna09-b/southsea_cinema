@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/math_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
@@ -65,7 +63,7 @@ class MovieCard extends StatelessWidget {
                   style: const TextStyle(color: cinemaFontWhite, fontSize: 18),
                 ),
                 ),
-                
+
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
