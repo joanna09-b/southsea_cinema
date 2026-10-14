@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
@@ -8,82 +9,58 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    return Padding(
+      padding: const EdgeInsets.all(16),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  movie.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  '(${movie.ageRating})',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
-              ],
+            Text(
+              '${movie.title} (${movie.ageRating})',
+              style: const TextStyle(
+                color: cinemaBrand,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
                   movie.imagePath,
-                  width: 80,
-                  height: 80,
+                  width: 159,
+                  height: 225,
                   fit: BoxFit.cover,
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 24),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Text(
-                        movie.description,
-                        style: const TextStyle(color: Colors.black54),
-                      ),
-                    ],
+                  child: Text(
+                    movie.description,
+                    style: const TextStyle(
+                      color: cinemaFontWhite,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
                 
               ],
             ),
 
-            const SizedBox(height: 16),
-            Text(
-              'Book your tickets',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            const SizedBox(height: 24),
+            const Text(
+              'BOOK TICKETS',
+              style: TextStyle(color: cinemaFontWhite, fontSize: 18),
             ),
-
+            const SizedBox(height: 16),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(
-                  '${movie.date} at ${movie.time}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
+                Text(
+                  '${movie.date}  ${movie.time}',
+                  style: const TextStyle(color: cinemaFontWhite, fontSize: 18),
                 ),
-                ),
-                
-                
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -93,12 +70,15 @@ class MovieCard extends StatelessWidget {
                       ),
                     );
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: cinemaBrand,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+),
                   child: const Text('Book Now'),
                 ),
-                
               ],
             ),
-            
           ],
         ),
       ),
