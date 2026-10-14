@@ -8,6 +8,8 @@ class Movie {
   final String time;
   final double price; 
 
+  String get formattedPrice => '£${price.toStringAsFixed(2)}';
+
 
   Movie({
     required this.id,
