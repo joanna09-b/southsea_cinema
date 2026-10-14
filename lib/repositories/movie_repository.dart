@@ -4,24 +4,26 @@ class MovieRepository {
   List<Movie> getMovies() {
     return [
       Movie(
-        id: '1',
+        id: 'MIF',
         title: 'Mission: Impossible - Fallout',
         description:
             '"Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission"',
         ageRating: 'PG-13',
-        date: '2024-07-12',
+        date: 'Sunday 16th November 2026',
         time: '19:30',
         imagePath: 'images/MIF.jpeg',
+        price: 12.99,
       ),
       Movie(
-        id: '2',
+        id: 'rio',
         title: 'Rio',
         description:
             '"Blu, a domesticated macaw from small-town Minnesota, takes off on an adventure to Rio de Janeiro with the bird of his dreams"',
         ageRating: 'G',
-        date: '2024-07-15',
+        date: 'Saturday 15th November 2026',
         time: '18:00',
         imagePath: 'images/rio.jpeg',
+        price: 9.99,
       ),
     ];
   }
