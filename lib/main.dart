@@ -15,7 +15,7 @@ class SouthseaCinemaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appTitle,
-      home: const HomeView(),
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: cinemaBackground,
