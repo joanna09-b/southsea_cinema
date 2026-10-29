@@ -7,7 +7,9 @@ class BasketRepository {
 
   final List<BasketItem> _items = [];
 
-  List<BasketItem> get items => _items;
+  List<BasketItem> getItems () {
+    return List<BasketItem>.unmodifiable(_items);
+  }
 
   void addItem(BasketItem item) {
     _items.add(item);
