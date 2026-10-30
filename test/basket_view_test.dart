@@ -22,15 +22,16 @@ void main() {
   });
 
   group('BasketView tests', () {
-    testWidgets('displays empty state when basket is empty',
-        (WidgetTester tester) async {
+    testWidgets('shows an empty message when the basket is empty', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(const MaterialApp(home: BasketView()));
 
-      expect(find.text('Your basket is empty.'), findsOneWidget);
-      expect(find.text('Checkout'), findsNothing);
+      expect(find.text('Your basket is empty'), findsOneWidget);
+      expect(find.text('BUY TICKETS'), findsNothing);
     });
 
-    testWidgets('shows items and removes one when delete is pressed', (
+    testWidgets('shows order details, service charge and total due', (
       WidgetTester tester,
     ) async {
       BasketRepository.instance.addItem(
@@ -39,28 +40,45 @@ void main() {
 
       await tester.pumpWidget(const MaterialApp(home: BasketView()));
 
-      expect(find.text('Your basket'), findsOneWidget);
-      expect(find.text('2 x Test Movie'), findsOneWidget);
-      expect(find.textContaining('£20.00'), findsNWidgets(2));
-      expect(find.text('Checkout'), findsOneWidget);
+      expect(find.text('MY ORDER'), findsOneWidget);
+      expect(find.text('2 Tickets'), findsOneWidget);
+      expect(find.textContaining('Test Movie'), findsOneWidget);
+      expect(find.text('£20.00'), findsOneWidget);
+      expect(find.text('£2.00'), findsOneWidget);
+      expect(find.text('£22.00'), findsOneWidget);
+      expect(find.text('UPDATE ORDER'), findsOneWidget);
+      expect(find.text('BUY TICKETS'), findsOneWidget);
+    });
 
-      await tester.tap(find.byIcon(Icons.delete_outline));
+    testWidgets('removes an item when the delete button is pressed', (
+      WidgetTester tester,
+    ) async {
+      BasketRepository.instance.addItem(
+        const BasketItem(movie: testMovie, quantity: 2),
+      );
+
+      await tester.pumpWidget(const MaterialApp(home: BasketView()));
+
+      await tester.tap(find.byIcon(Icons.delete));
       await tester.pump();
 
-      expect(find.text('Your basket is empty.'), findsOneWidget);
+      expect(find.text('Your basket is empty'), findsOneWidget);
       expect(BasketRepository.instance.getItems(), isEmpty);
     });
-    testWidgets('checkout clears the basket and shows a confirmation message', (WidgetTester tester) async {
+
+    testWidgets('buying tickets clears the basket and shows a confirmation', (
+      WidgetTester tester,
+    ) async {
       BasketRepository.instance.addItem(
         const BasketItem(movie: testMovie, quantity: 1),
       );
 
       await tester.pumpWidget(const MaterialApp(home: BasketView()));
 
-      await tester.tap(find.text('Checkout'));
+      await tester.tap(find.text('BUY TICKETS'));
       await tester.pump();
 
-      expect(find.text('Thank you for your order!'), findsOneWidget);
+      expect(find.text('Thanks, your tickets are booked'), findsOneWidget);
       expect(BasketRepository.instance.getItems(), isEmpty);
     });
   });
