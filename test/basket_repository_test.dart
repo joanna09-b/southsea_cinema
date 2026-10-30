@@ -83,14 +83,32 @@ void main() {
       expect(basket.getTotal(), 0.0);
     });
 
-    test('the list from getItems cannot be modified', () {
+        test('the list from getItems cannot be modified', () {
       final BasketRepository basket = BasketRepository.instance;
 
       expect(
-        () => basket.getItems().add(const BasketItem(movie: testMovie1, quantity: 1)),
+        () => basket.getItems().add(
+              const BasketItem(movie: testMovie1, quantity: 1),
+            ),
         throwsUnsupportedError,
       );
+    });
 
+    test('calculates service charge and total due', () {
+      final BasketRepository basket = BasketRepository.instance;
+
+      basket.addItem(const BasketItem(movie: testMovie1, quantity: 2));
+      basket.addItem(const BasketItem(movie: testMovie2, quantity: 1));
+
+      expect(basket.getServiceCharge(), 4.0);
+      expect(basket.getTotalDue(), 36.0);
+    });
+
+    test('empty basket has no service charge', () {
+      final BasketRepository basket = BasketRepository.instance;
+
+      expect(basket.getServiceCharge(), 0.0);
+      expect(basket.getTotalDue(), 0.0);
     });
   });
 }
