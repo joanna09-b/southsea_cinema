@@ -3,6 +3,8 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/widgets/cinema_button.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
+import 'package:southsea_cinema/models/basket_item.dart';
 
 class MovieListing extends StatefulWidget {
   final Movie movie;
@@ -96,6 +98,11 @@ class _MovieListingState extends State<MovieListing> {
               child: CinemaButton(
                 label: 'ADD TO ORDER \nYou ordered $totalTicket ticket${totalTicket == 1 ? '' : 's'}',
                 onPressed: () {
+                  if (_ticketQuantity > 0) {
+                    BasketRepository.instance.addItem(
+                      BasketItem(movie: widget.movie, quantity: _ticketQuantity),
+                    );
+                  }
                   setState(() {
                     totalTicket = _ticketOrdered(_ticketQuantity);
                   });

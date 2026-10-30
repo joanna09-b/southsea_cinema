@@ -6,8 +6,13 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/movie_repository.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
 
 void main() {
+  setUp(() {
+    BasketRepository.instance.clear();
+  });
+
   final List<Movie> movies = MovieRepository().getMovies();
 
   void useTallScreen(WidgetTester tester) {
