@@ -50,5 +50,46 @@ void main() {
 
       expect(movie.formattedPrice, '£7.50');
     });
+    test('fromJson builds aMovie with every field', (){
+      final Map<String, dynamic> json = <String, dynamic>{
+       'id': 'test-film',
+        'title': 'Test Film',
+        'ageRating': '12A',
+        'description': 'A test description.',
+        'date': 'Sunday 4 Oct 2026',
+        'time': '15:00',
+        'price': 9.99,
+        'imagePath': 'assets/images/test.jpg',
+      };
+      final Movie movie = Movie.fromJson(json);
+
+      expect(movie.id, 'test-film');
+      expect(movie.title, 'Test Film');
+      expect(movie.ageRating, '12A');
+      expect(movie.description, 'A test description.');
+      expect(movie.date, 'Sunday 4 Oct 2026');
+      expect(movie.time, '15:00');
+      expect(movie.price, 9.99);
+      expect(movie.imagePath, 'assets/images/test.jpg');
+      expect(movie.toJson(), json);
+      
+    });
+
+    test('fromJson converts a whole-number price to a double', () {
+      final Map<String, dynamic> json = <String, dynamic>{
+        'id': 'whole',
+        'title': 'Whole Price',
+        'ageRating': 'U',
+        'description': 'Whole number price.',
+        'date': 'Monday 5 Oct 2026',
+        'time': '18:00',
+        'price': 8,
+        'imagePath': 'assets/images/whole.jpg',
+      };
+      final Movie movie = Movie.fromJson(json);
+
+      expect(movie.price, isA<double>());
+      expect(movie.price, 8.0);
+    });
   });
 }
