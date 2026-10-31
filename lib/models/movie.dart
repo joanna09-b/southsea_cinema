@@ -1,25 +1,25 @@
 class Movie {
   final String id;
   final String title;
-  final String description;
-  final String imagePath;
   final String ageRating;
+  final String description;
   final String date;
   final String time;
   final double price;
-
-  String get formattedPrice => '£${price.toStringAsFixed(2)}';
+  final String imagePath;
 
   const Movie({
     required this.id,
     required this.title,
-    required this.description,
-    required this.imagePath,
     required this.ageRating,
+    required this.description,
     required this.date,
     required this.time,
     required this.price,
+    required this.imagePath,
   });
+
+  String get formattedPrice => '£${price.toStringAsFixed(2)}';
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     final String id = json['id'] as String;
@@ -56,6 +56,5 @@ class Movie {
       'imagePath': imagePath,
     };
     return data;
-  
   }
 }

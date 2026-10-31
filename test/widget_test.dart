@@ -7,10 +7,12 @@ import 'package:southsea_cinema/repositories/movie_repository.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   setUp(() {
     BasketRepository.instance.clear();
+    rootBundle.clear();
   });
 
   final List<Movie> movies = MovieRepository().getMovies();
@@ -27,6 +29,7 @@ void main() {
         (WidgetTester tester) async {
       useTallScreen(tester);
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
 
       expect(find.text(appTitle), findsOneWidget);
       expect(find.byType(MovieCard), findsNWidgets(movies.length));
@@ -42,6 +45,7 @@ void main() {
     Future<void> openFirstListing(WidgetTester tester) async {
       useTallScreen(tester);
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Book Now').first);
       await tester.pumpAndSettle();
     }

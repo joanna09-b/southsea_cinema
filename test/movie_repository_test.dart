@@ -14,7 +14,7 @@ void main() {
 
     test('getMovieById returns matching movie when id exists', () {
       final MovieRepository repository = MovieRepository();
-      final Movie? movie = repository.getMovieById('MIF');
+      final Movie? movie = repository.getMovieById('1');
       expect(movie, isNotNull);
       expect(movie?.title, 'Mission: Impossible - Fallout');
     });

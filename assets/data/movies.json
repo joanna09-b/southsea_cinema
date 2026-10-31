@@ -1,22 +1,22 @@
 [
-    {
-        "id": "YOUR-MIF_ID",
-        "title": "Mission Impossible - Fallout",
-        "age_rating": "12A",
-        "description": "Ethan Hunt and his IMF team, along with some familiar allies, race against time after a mission gone wrong.",
-        "date": "YOUR DATE",
-        "time": "YOUR TIME",
-        "price": 10.0,
-        "imagePath": "assets/images/MIF.jpg"
-    },
-    {
-        "id": "2",
-        "title": "Rio",
-        "ageRating": "G",
-        "description": "Blu, a domesticated macaw from small-town Minnesota, takes off on an adventure to Rio de Janeiro with the bird of his dreams",
-        "date": "YOUR DATE",
-        "time": "18:00",
-        "price": 9.99,
-        "imagePath": "assets/images/rio.jpeg"
-    }
+  {
+    "id": "1",
+    "title": "Mission: Impossible - Fallout",
+    "ageRating": "PG-13",
+    "description": "Ethan Hunt and his IMF team race against time to recover stolen plutonium cores after a botched mission",
+    "date": "2024-07-12",
+    "time": "19:30",
+    "price": 9.99,
+    "imagePath": "assets/images/MIF.jpeg"
+  },
+  {
+    "id": "2",
+    "title": "Rio",
+    "ageRating": "G",
+    "description": "Blu, a domesticated macaw from small-town Minnesota, takes off on an adventure to Rio de Janeiro with the bird of his dreams",
+    "date": "2024-07-15",
+    "time": "18:00",
+    "price": 9.99,
+    "imagePath": "assets/images/rio.jpeg"
+  }
 ]
