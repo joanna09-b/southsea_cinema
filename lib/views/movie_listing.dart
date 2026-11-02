@@ -30,87 +30,89 @@ class _MovieListingState extends State<MovieListing> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle),
-        
       ),
       drawer: const NavDrawer(),
       body: Container(
         color: const Color(0xFF1C1E26),
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16,
-          children: [
-            Text(
-              '${widget.movie.title} (${widget.movie.ageRating})',
-              style: const TextStyle(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 16,
+            children: [
+              Text(
+                '${widget.movie.title} (${widget.movie.ageRating})',
+                style: const TextStyle(
                   color: cinemaFontWhite,
                   fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
-            const Text('Southsea Cinema Room'),
-            Text('${widget.movie.date} at ${widget.movie.time}'),
-            Text('"${widget.movie.description}"'),
-            const Text(
-              'Please note that discounts / membership benefits will be applied once you have selected your tickets.',
-            ),
-            const Text('Select Quantities (Up to 5 in total)'),
-            const Text(
-              'Tickets',
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Row(
-              children: [
-                DropdownMenu<int>(
-                  initialSelection: 0,
-                  width: 100,
-                  textStyle:
-                      const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
-                  inputDecorationTheme: const InputDecorationTheme(
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                  onSelected: (int? value) {
-                    if (value != null) {
-                      setState(() {
-                        _ticketQuantity = value;
-                      });
-                    }
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: 0, label: '0'),
-                    DropdownMenuEntry(value: 1, label: '1'),
-                    DropdownMenuEntry(value: 2, label: '2'),
-                    DropdownMenuEntry(value: 3, label: '3'),
-                    DropdownMenuEntry(value: 4, label: '4'),
-                    DropdownMenuEntry(value: 5, label: '5'),
-                  ],
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(width: 14),
-                Text('Adult (${widget.movie.formattedPrice})'),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: CinemaButton(
-                label: 'ADD TO ORDER \nYou ordered $totalTicket ticket${totalTicket == 1 ? '' : 's'}',
-                onPressed: () {
-                  if (_ticketQuantity > 0) {
-                    BasketRepository.instance.addItem(
-                      BasketItem(movie: widget.movie, quantity: _ticketQuantity),
-                    );
-                  }
-                  setState(() {
-                    totalTicket = _ticketOrdered(_ticketQuantity);
-                  });
-                },
-                
               ),
-            ),
-          ],
+              const Text('Southsea Cinema Room'),
+              Text('${widget.movie.date} at ${widget.movie.time}'),
+              Text('"${widget.movie.description}"'),
+              const Text(
+                'Please note that discounts / membership benefits will be applied once you have selected your tickets.',
+              ),
+              const Text('Select Quantities (Up to 5 in total)'),
+              const Text(
+                'Tickets',
+                style: TextStyle(
+                  color: cinemaFontWhite,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: [
+                  DropdownMenu<int>(
+                    initialSelection: 0,
+                    width: 100,
+                    textStyle:
+                        const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
+                    inputDecorationTheme: const InputDecorationTheme(
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    onSelected: (int? value) {
+                      if (value != null) {
+                        setState(() {
+                          _ticketQuantity = value;
+                        });
+                      }
+                    },
+                    dropdownMenuEntries: const [
+                      DropdownMenuEntry(value: 0, label: '0'),
+                      DropdownMenuEntry(value: 1, label: '1'),
+                      DropdownMenuEntry(value: 2, label: '2'),
+                      DropdownMenuEntry(value: 3, label: '3'),
+                      DropdownMenuEntry(value: 4, label: '4'),
+                      DropdownMenuEntry(value: 5, label: '5'),
+                    ],
+                  ),
+                  const SizedBox(width: 14),
+                  Text('Adult (${widget.movie.formattedPrice})'),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: CinemaButton(
+                  label:
+                      'ADD TO ORDER \nYou ordered $totalTicket ticket${totalTicket == 1 ? '' : 's'}',
+                  onPressed: () {
+                    if (_ticketQuantity > 0) {
+                      BasketRepository.instance.addItem(
+                        BasketItem(movie: widget.movie, quantity: _ticketQuantity),
+                      );
+                    }
+                    setState(() {
+                      totalTicket = _ticketOrdered(_ticketQuantity);
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

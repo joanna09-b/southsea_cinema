@@ -26,7 +26,7 @@ class MovieCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Row(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
@@ -35,14 +35,12 @@ class MovieCard extends StatelessWidget {
                   height: 225,
                   fit: BoxFit.cover,
                 ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: Text(
-                    movie.description,
-                    style: const TextStyle(
-                      color: cinemaFontWhite,
-                      fontSize: 18,
-                    ),
+                const SizedBox(height: 24),
+                Text(
+                  movie.description,
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                    fontSize: 18,
                   ),
                 ),
               ],
