@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:southsea_cinema/constants.dart';  
+import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class SettingsView extends StatelessWidget {
@@ -13,8 +13,7 @@ class SettingsView extends StatelessWidget {
       ),
       drawer: const NavDrawer(),
       body: const Center(
-        child: Text('Settings',
-            style  :TextStyle(color: cinemaFontWhite)),
+        child: Text('Settings', style: TextStyle(color: cinemaFontWhite)),
       ),
     );
   }

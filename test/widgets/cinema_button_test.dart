@@ -4,11 +4,14 @@ import 'package:southsea_cinema/widgets/cinema_button.dart';
 
 void main() {
   group('CinemaButton tests', () {
-    testWidgets('renders its label',(WidgetTester tester) async {
+    testWidgets('renders its label', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: CinemaButton(label: 'Book Now', onPressed: () {},),
+            body: CinemaButton(
+              label: 'Book Now',
+              onPressed: () {},
+            ),
           ),
         ),
       );

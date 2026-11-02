@@ -102,7 +102,8 @@ class _MovieListingState extends State<MovieListing> {
                   onPressed: () {
                     if (_ticketQuantity > 0) {
                       BasketRepository.instance.addItem(
-                        BasketItem(movie: widget.movie, quantity: _ticketQuantity),
+                        BasketItem(
+                            movie: widget.movie, quantity: _ticketQuantity),
                       );
                     }
                     setState(() {

@@ -50,9 +50,9 @@ void main() {
 
       expect(movie.formattedPrice, '£7.50');
     });
-    test('fromJson builds aMovie with every field', (){
+    test('fromJson builds aMovie with every field', () {
       final Map<String, dynamic> json = <String, dynamic>{
-       'id': 'test-film',
+        'id': 'test-film',
         'title': 'Test Film',
         'ageRating': '12A',
         'description': 'A test description.',
@@ -72,7 +72,6 @@ void main() {
       expect(movie.price, 9.99);
       expect(movie.imagePath, 'assets/images/test.jpg');
       expect(movie.toJson(), json);
-      
     });
 
     test('fromJson converts a whole-number price to a double', () {

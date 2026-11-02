@@ -3,21 +3,21 @@ import 'package:southsea_cinema/models/basket_item.dart';
 class BasketRepository {
   BasketRepository._internal();
 
-    static const double serviceChargePerLine = 2.0;
+  static const double serviceChargePerLine = 2.0;
 
-    double getServiceCharge() {
-      return _items.length * serviceChargePerLine;
-    }
+  double getServiceCharge() {
+    return _items.length * serviceChargePerLine;
+  }
 
-    double getTotalDue() {
-      return getTotal() + getServiceCharge();
-    }
+  double getTotalDue() {
+    return getTotal() + getServiceCharge();
+  }
 
   static final BasketRepository instance = BasketRepository._internal();
 
   final List<BasketItem> _items = [];
 
-  List<BasketItem> getItems () {
+  List<BasketItem> getItems() {
     return List<BasketItem>.unmodifiable(_items);
   }
 

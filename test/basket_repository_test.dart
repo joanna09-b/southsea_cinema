@@ -30,7 +30,7 @@ void main() {
     BasketRepository.instance.clear();
   });
 
-  group('BasketRepository tests',() {
+  group('BasketRepository tests', () {
     test('starts empty with zero totals', () {
       final BasketRepository basket = BasketRepository.instance;
 
@@ -47,8 +47,7 @@ void main() {
       expect(basket.getItems().length, 2);
       expect(basket.getTotalTickets(), 3);
       expect(basket.getTotal(), 32.0); // (2 * 10.0) + (1 * 12.0)
-    }
-    );
+    });
 
     test('removes an item by index', () {
       final BasketRepository basket = BasketRepository.instance;
@@ -76,14 +75,14 @@ void main() {
       final BasketRepository basket = BasketRepository.instance;
 
       basket.addItem(const BasketItem(movie: testMovie1, quantity: 3));
-     
+
       basket.clear();
 
       expect(basket.getItems(), isEmpty);
       expect(basket.getTotal(), 0.0);
     });
 
-        test('the list from getItems cannot be modified', () {
+    test('the list from getItems cannot be modified', () {
       final BasketRepository basket = BasketRepository.instance;
 
       expect(

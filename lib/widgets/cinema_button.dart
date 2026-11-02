@@ -7,8 +7,8 @@ class CinemaButton extends StatelessWidget {
   final double horizontalPadding;
 
   const CinemaButton({
-    super.key, 
-    required this.label, 
+    super.key,
+    required this.label,
     required this.onPressed,
     this.horizontalPadding = 40,
   });
@@ -22,10 +22,13 @@ class CinemaButton extends StatelessWidget {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+      ),
       onPressed: onPressed,
-      child: Text(label, textAlign: TextAlign.center,),
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+      ),
     );
-
   }
 }

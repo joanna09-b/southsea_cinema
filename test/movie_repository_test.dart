@@ -3,7 +3,7 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/movie_repository.dart';
 
 void main() {
-    TestWidgetsFlutterBinding.ensureInitialized();
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('MovieRepository unit tests', () {
     test('getMovies returns two movies', () {
       final MovieRepository repository = MovieRepository();
@@ -34,7 +34,6 @@ void main() {
       expect(movies[0].title, 'Mission: Impossible - Fallout');
       expect(movies[1].title, 'Rio');
       expect(repository.getMovies(), movies);
-
     });
   });
 }
