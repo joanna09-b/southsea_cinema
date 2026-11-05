@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/user_settings.dart';
 import 'package:southsea_cinema/widgets/cinema_button.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+
+const String prefName = 'user_name';
+const String prefEmail = 'user_email';
+const String prefPhone = 'user_phone';
+const String prefNewsletter = 'user_newsletter';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -26,6 +32,7 @@ class _SettingsViewState extends State<SettingsView> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
+    _loadSettings();
   }
 
   @override
@@ -36,10 +43,54 @@ class _SettingsViewState extends State<SettingsView> {
     super.dispose();
   }
 
-  void _saveSettings() {
+  Future<void> _loadSettings() async {
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    final String? savedName = await prefs.getString(prefName);
+    final String? savedEmail = await prefs.getString(prefEmail);
+    final String? savedPhone = await prefs.getString(prefPhone);
+    final bool? savedNewsletter = await prefs.getBool(prefNewsletter);
+
+    String name = '';
+    if (savedName != null) {
+      name = savedName;
+    }
+
+    String email = '';
+    if (savedEmail != null) {
+      email = savedEmail;
+    }
+
+    String phone = '';
+    if (savedPhone != null) {
+      phone = savedPhone;
+    }
+
+    bool newsletter = false;
+    if (savedNewsletter != null) {
+      newsletter = savedNewsletter;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _nameController.text = name;
+      _emailController.text = email;
+      _phoneController.text = phone;
+      _receiveNewsletter = newsletter;
+    });
+  }
+
+  Future<void> _saveSettings() async {
     final String name = _nameController.text.trim();
     final String email = _emailController.text.trim();
     final String phone = _phoneController.text.trim();
+
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    await prefs.setString(prefName, name);
+    await prefs.setString(prefEmail, email);
+    await prefs.setString(prefPhone, phone);
+    await prefs.setBool(prefNewsletter, _receiveNewsletter);
 
     final UserSettings settings = UserSettings(
       name: name,
@@ -48,6 +99,9 @@ class _SettingsViewState extends State<SettingsView> {
       receiveNewsletters: _receiveNewsletter,
     );
 
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _confirmationMessage = 'Settings saved for ${settings.name}';
     });
