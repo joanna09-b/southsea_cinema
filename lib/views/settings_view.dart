@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
-import 'package:southsea_cinema/widgets/nav_drawer.dart';
-import 'package:southsea_cinema/widgets/cinema_button.dart';
 import 'package:southsea_cinema/models/user_settings.dart';
+import 'package:southsea_cinema/widgets/cinema_button.dart';
+import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
+  State<SettingsView> createState() {
+    return _SettingsViewState();
+  }
 }
 
 class _SettingsViewState extends State<SettingsView> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
-  bool _receiveNewsletters = false;
+  bool _receiveNewsletter = false;
   String _confirmationMessage = '';
 
   @override
@@ -37,19 +39,20 @@ class _SettingsViewState extends State<SettingsView> {
   void _saveSettings() {
     final String name = _nameController.text.trim();
     final String email = _emailController.text.trim();
-    final String phoneNumber = _phoneController.text.trim();
+    final String phone = _phoneController.text.trim();
 
     final UserSettings settings = UserSettings(
       name: name,
       email: email,
-      phoneNumber: phoneNumber,
-      receiveNewsletters: _receiveNewsletters,
+      phoneNumber: phone,
+      receiveNewsletters: _receiveNewsletter,
     );
 
     setState(() {
       _confirmationMessage = 'Settings saved for ${settings.name}';
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,16 +65,21 @@ class _SettingsViewState extends State<SettingsView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Customer Profile',
-             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: cinemaFontWhite)),
+            const Text(
+              'Customer Profile',
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 16),
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(
-                labelText: 'Full Name',
-                hintText: 'Enter your full name',
-                labelStyle: TextStyle(color: cinemaFontWhite),
                 border: OutlineInputBorder(),
+                labelText: 'Full name',
+                hintText: 'Enter your name',
               ),
             ),
             const SizedBox(height: 16),
@@ -79,10 +87,9 @@ class _SettingsViewState extends State<SettingsView> {
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
-                labelText: 'Email Address',
-                hintText: 'Enter your email address',
-                labelStyle: TextStyle(color: cinemaFontWhite),
                 border: OutlineInputBorder(),
+                labelText: 'Email address',
+                hintText: 'Enter your email',
               ),
             ),
             const SizedBox(height: 16),
@@ -90,46 +97,48 @@ class _SettingsViewState extends State<SettingsView> {
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
-                labelText: 'Phone Number',
-                hintText: 'Enter your phone number',
-                labelStyle: TextStyle(color: cinemaFontWhite),
                 border: OutlineInputBorder(),
+                labelText: 'Phone number',
+                hintText: 'Enter your phone number',
               ),
             ),
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(child: Text('Receive Newsletters via email', style: TextStyle(color: cinemaFontWhite))),
+                const Expanded(
+                  child: Text(
+                    'Receive news and offers by email',
+                    style: TextStyle(color: cinemaFontWhite),
+                  ),
+                ),
                 Switch(
-                  value: _receiveNewsletters,
+                  value: _receiveNewsletter,
                   onChanged: (bool value) {
                     setState(() {
-                      _receiveNewsletters = value;
+                      _receiveNewsletter = value;
                     });
                   },
                 ),
-                const SizedBox(width: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: CinemaButton(
-                    label: 'Save Settings',
-                    onPressed: _saveSettings,
-                  ),
-                ),
-                if (_confirmationMessage.isNotEmpty)...[
-                  
-                  const SizedBox(height: 12),
-                  Text(
-                    _confirmationMessage,
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ]
               ],
-            ),        
-                 
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: CinemaButton(
+                label: 'Save Settings',
+                onPressed: _saveSettings,
+              ),
+            ),
+            if (_confirmationMessage.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Text(
+                _confirmationMessage,
+                style: const TextStyle(
+                  color: cinemaFontWhite,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ],
         ),
       ),
