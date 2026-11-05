@@ -10,5 +10,4 @@ class UserSettings {
     this.phoneNumber = '',
     this.receiveNewsletters = false,
   });
-
 }
