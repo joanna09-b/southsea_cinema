@@ -4,6 +4,8 @@ import 'package:southsea_cinema/models/basket_item.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
 import 'package:southsea_cinema/widgets/cinema_button.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/models/booking.dart';
+import 'package:southsea_cinema/database/cinema_db.dart';
 
 const TextStyle _bodyStyle = TextStyle(color: cinemaFontWhite, fontSize: 16);
 const TextStyle _boldStyle = TextStyle(
@@ -28,6 +30,47 @@ class BasketView extends StatefulWidget {
 
 class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
+
+  Future<void> _checkout(BasketRepository basket) async {
+  final List<BasketItem> items = basket.getItems();
+
+  if (items.isEmpty) {
+    return;
+  }
+
+  try {
+    final int bookingNumber =
+        await CinemaDatabase.instance.getNextBookingNumber();
+
+    final String summary = items
+        .map((item) => '${item.quantity} x ${item.movie.title}')
+        .join(', ');
+
+    final Booking booking = Booking(
+      bookingNumber: bookingNumber,
+      summary: summary,
+      total: basket.getTotalDue(),
+      date: DateTime.now().toString(),
+    );
+
+    await CinemaDatabase.instance.insertBooking(booking);
+
+    basket.clear();
+
+    if (!mounted) return;
+
+    setState(() {
+      _confirmationMessage =
+          'Thanks, your tickets are booked! Booking number: $bookingNumber';
+    });
+  } catch (error) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Could not save booking: $error')),
+    );
+  }
+}
 
   Widget _buildEmptyState() {
     return const Center(
@@ -179,10 +222,7 @@ class _BasketViewState extends State<BasketView> {
               label: 'BUY TICKETS',
               horizontalPadding: 8,
               onPressed: () {
-                setState(() {
-                  basket.clear();
-                  _confirmationMessage = 'Thanks, your tickets are booked';
-                });
+                _checkout(basket);
               },
             ),
           ),

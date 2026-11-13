@@ -4,6 +4,7 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
 import 'package:southsea_cinema/views/settings_view.dart';
+import 'package:southsea_cinema/views/bookings_view.dart';
 //import 'package:southsea_cinema/views/movie_listing.dart';
 
 bool isSupportedPlatform() {
@@ -53,6 +54,7 @@ class SouthseaCinemaApp extends StatelessWidget {
         '/': (context) => const HomeView(),
         '/basket': (context) => const BasketView(),
         '/settings': (context) => const SettingsView(),
+        '/bookings': (context) => const BookingsView(),
         //'/listing': (context) => const MovieListing(),
       },
     );
