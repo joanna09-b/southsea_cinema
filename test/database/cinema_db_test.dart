@@ -53,9 +53,12 @@ void main() {
   });
 
   test('getAllBookings returns the highest booking number first', () async {
-    await CinemaDatabase.instance.insertBooking(buildBooking(1001, 'First', 5.0));
-    await CinemaDatabase.instance.insertBooking(buildBooking(1003, 'Third', 9.0));
-    await CinemaDatabase.instance.insertBooking(buildBooking(1002, 'Second', 7.0));
+    await CinemaDatabase.instance
+        .insertBooking(buildBooking(1001, 'First', 5.0));
+    await CinemaDatabase.instance
+        .insertBooking(buildBooking(1003, 'Third', 9.0));
+    await CinemaDatabase.instance
+        .insertBooking(buildBooking(1002, 'Second', 7.0));
 
     final List<Booking> bookings =
         await CinemaDatabase.instance.getAllBookings();

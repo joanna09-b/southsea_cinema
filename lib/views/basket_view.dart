@@ -40,113 +40,113 @@ class _BasketViewState extends State<BasketView> {
   }
 
   Future<void> _checkout(BasketRepository basket) async {
-  final List<BasketItem> items = basket.getItems();
+    final List<BasketItem> items = basket.getItems();
 
-  if (items.isEmpty) {
-    return;
+    if (items.isEmpty) {
+      return;
+    }
+
+    try {
+      final int bookingNumber =
+          await CinemaDatabase.instance.getNextBookingNumber();
+
+      final String summary = items
+          .map((item) => '${item.quantity} x ${item.movie.title}')
+          .join(', ');
+
+      final Booking booking = Booking(
+        bookingNumber: bookingNumber,
+        summary: summary,
+        total: basket.getTotalDue(),
+        date: DateTime.now().toString(),
+      );
+
+      await CinemaDatabase.instance.insertBooking(booking);
+
+      basket.clear();
+
+      if (!mounted) return;
+
+      setState(() {
+        _bookings = CinemaDatabase.instance.getAllBookings();
+        _confirmationMessage =
+            'Thanks, your tickets are booked! Booking number: $bookingNumber';
+      });
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not save booking: $error')),
+      );
+    }
   }
 
-  try {
-    final int bookingNumber =
-        await CinemaDatabase.instance.getNextBookingNumber();
-
-    final String summary = items
-        .map((item) => '${item.quantity} x ${item.movie.title}')
-        .join(', ');
-
-    final Booking booking = Booking(
-      bookingNumber: bookingNumber,
-      summary: summary,
-      total: basket.getTotalDue(),
-      date: DateTime.now().toString(),
-    );
-
-    await CinemaDatabase.instance.insertBooking(booking);
-
-    basket.clear();
-
-    if (!mounted) return;
-
-    setState(() {
-  _bookings = CinemaDatabase.instance.getAllBookings();
-  _confirmationMessage =
-      'Thanks, your tickets are booked! Booking number: $bookingNumber';
-});
-  } catch (error) {
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Could not save booking: $error')),
-    );
-  }
-}
   Widget _buildPastBookings() {
-  return FutureBuilder<List<Booking>>(
-    future: _bookings,
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
+    return FutureBuilder<List<Booking>>(
+      future: _bookings,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-      if (snapshot.hasError) {
-        return const Text(
-          'Could not load previous bookings.',
-          style: _bodyStyle,
-        );
-      }
+        if (snapshot.hasError) {
+          return const Text(
+            'Could not load previous bookings.',
+            style: _bodyStyle,
+          );
+        }
 
-      final List<Booking> bookings = snapshot.data ?? [];
+        final List<Booking> bookings = snapshot.data ?? [];
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 32),
-          const Text(
-            'PREVIOUS BOOKINGS',
-            style: TextStyle(
-              color: cinemaFontWhite,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          if (bookings.isEmpty)
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 32),
             const Text(
-              'You have no previous bookings.',
-              style: _bodyStyle,
-            )
-          else
-            ...bookings.map(
-              (booking) => Card(
-                color: cinemaSurface,
-                child: ListTile(
-                  title: Text(
-                    'Booking #${booking.bookingNumber}',
-                    style: const TextStyle(
-                      color: cinemaBrand,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '${booking.summary}\nDate: ${booking.date}',
-                    style: _bodyStyle,
-                  ),
-                  trailing: Text(
-                    '£${booking.total.toStringAsFixed(2)}',
-                    style: _boldStyle,
-                  ),
-                  isThreeLine: true,
-                ),
+              'PREVIOUS BOOKINGS',
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
             ),
-        ],
-      );
-    },
-  );
-}
+            const SizedBox(height: 12),
+            if (bookings.isEmpty)
+              const Text(
+                'You have no previous bookings.',
+                style: _bodyStyle,
+              )
+            else
+              ...bookings.map(
+                (booking) => Card(
+                  color: cinemaSurface,
+                  child: ListTile(
+                    title: Text(
+                      'Booking #${booking.bookingNumber}',
+                      style: const TextStyle(
+                        color: cinemaBrand,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${booking.summary}\nDate: ${booking.date}',
+                      style: _bodyStyle,
+                    ),
+                    trailing: Text(
+                      '£${booking.total.toStringAsFixed(2)}',
+                      style: _boldStyle,
+                    ),
+                    isThreeLine: true,
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _buildEmptyState() {
     return const Center(

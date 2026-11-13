@@ -24,8 +24,7 @@ void main() {
 
     sqfliteFfiInit();
 
-    final Database database =
-        await databaseFactoryFfiNoIsolate.openDatabase(
+    final Database database = await databaseFactoryFfiNoIsolate.openDatabase(
       inMemoryDatabasePath,
       options: OpenDatabaseOptions(
         version: 1,
@@ -97,7 +96,8 @@ void main() {
       await tester.tap(find.text('BUY TICKETS'));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Thanks, your tickets are booked'), findsOneWidget);
+      expect(find.textContaining('Thanks, your tickets are booked'),
+          findsOneWidget);
       expect(BasketRepository.instance.getItems(), isEmpty);
     });
   });
