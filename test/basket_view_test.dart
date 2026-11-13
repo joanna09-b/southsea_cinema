@@ -4,6 +4,8 @@ import 'package:southsea_cinema/models/basket_item.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
+import 'package:southsea_cinema/database/cinema_db.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 const Movie testMovie = Movie(
   id: 'test-one',
@@ -17,8 +19,25 @@ const Movie testMovie = Movie(
 );
 
 void main() {
-  setUp(() {
+  setUp(() async {
     BasketRepository.instance.clear();
+
+    sqfliteFfiInit();
+
+    final Database database =
+        await databaseFactoryFfiNoIsolate.openDatabase(
+      inMemoryDatabasePath,
+      options: OpenDatabaseOptions(
+        version: 1,
+        onCreate: CinemaDatabase.instance.createTables,
+      ),
+    );
+
+    CinemaDatabase.instance.setDatabase(database);
+  });
+
+  tearDown(() async {
+    await CinemaDatabase.instance.close();
   });
 
   group('BasketView tests', () {
@@ -76,9 +95,9 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: BasketView()));
 
       await tester.tap(find.text('BUY TICKETS'));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
-      expect(find.text('Thanks, your tickets are booked'), findsOneWidget);
+      expect(find.textContaining('Thanks, your tickets are booked'), findsOneWidget);
       expect(BasketRepository.instance.getItems(), isEmpty);
     });
   });
