@@ -31,6 +31,14 @@ class BasketView extends StatefulWidget {
 class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
 
+  late Future<List<Booking>> _bookings;
+
+  @override
+  void initState() {
+    super.initState();
+    _bookings = CinemaDatabase.instance.getAllBookings();
+  }
+
   Future<void> _checkout(BasketRepository basket) async {
   final List<BasketItem> items = basket.getItems();
 
@@ -60,9 +68,10 @@ class _BasketViewState extends State<BasketView> {
     if (!mounted) return;
 
     setState(() {
-      _confirmationMessage =
-          'Thanks, your tickets are booked! Booking number: $bookingNumber';
-    });
+  _bookings = CinemaDatabase.instance.getAllBookings();
+  _confirmationMessage =
+      'Thanks, your tickets are booked! Booking number: $bookingNumber';
+});
   } catch (error) {
     if (!mounted) return;
 
@@ -70,6 +79,73 @@ class _BasketViewState extends State<BasketView> {
       SnackBar(content: Text('Could not save booking: $error')),
     );
   }
+}
+  Widget _buildPastBookings() {
+  return FutureBuilder<List<Booking>>(
+    future: _bookings,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+
+      if (snapshot.hasError) {
+        return const Text(
+          'Could not load previous bookings.',
+          style: _bodyStyle,
+        );
+      }
+
+      final List<Booking> bookings = snapshot.data ?? [];
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 32),
+          const Text(
+            'PREVIOUS BOOKINGS',
+            style: TextStyle(
+              color: cinemaFontWhite,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          if (bookings.isEmpty)
+            const Text(
+              'You have no previous bookings.',
+              style: _bodyStyle,
+            )
+          else
+            ...bookings.map(
+              (booking) => Card(
+                color: cinemaSurface,
+                child: ListTile(
+                  title: Text(
+                    'Booking #${booking.bookingNumber}',
+                    style: const TextStyle(
+                      color: cinemaBrand,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    '${booking.summary}\nDate: ${booking.date}',
+                    style: _bodyStyle,
+                  ),
+                  trailing: Text(
+                    '£${booking.total.toStringAsFixed(2)}',
+                    style: _boldStyle,
+                  ),
+                  isThreeLine: true,
+                ),
+              ),
+            ),
+        ],
+      );
+    },
+  );
 }
 
   Widget _buildEmptyState() {
@@ -266,7 +342,13 @@ class _BasketViewState extends State<BasketView> {
       drawer: const NavDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: content,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            content,
+            _buildPastBookings(),
+          ],
+        ),
       ),
     );
   }
