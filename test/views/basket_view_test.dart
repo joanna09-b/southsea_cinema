@@ -18,6 +18,28 @@ const Movie testMovie = Movie(
   price: 10.0,
 );
 
+const Movie testMovie2 = Movie(
+  id: 'test-two',
+  title: 'Test Movie 2',
+  ageRating: '12A',
+  imagePath: 'assets/images/test2.jpg',
+  description: 'Second test movie.',
+  date: 'Sunday 4 Oct 2026',
+  time: '17:00',
+  price: 12.0,
+);
+
+const Movie testMovie3 = Movie(
+  id: 'test-three',
+  title: 'Test Movie 3',
+  ageRating: 'PG',
+  imagePath: 'assets/images/test3.jpg',
+  description: 'Third test movie.',
+  date: 'Sunday 4 Oct 2026',
+  time: '19:00',
+  price: 15.0,
+);
+
 void main() {
   setUp(() async {
     BasketRepository.instance.clear();
@@ -99,6 +121,42 @@ void main() {
       expect(find.textContaining('Thanks, your tickets are booked'),
           findsOneWidget);
       expect(BasketRepository.instance.getItems(), isEmpty);
+    });
+    testWidgets('removes the middle item from three different movies', (
+      WidgetTester tester,
+    ) async {
+      BasketRepository.instance.addItem(
+        const BasketItem(movie: testMovie, quantity: 1),
+      );
+
+      BasketRepository.instance.addItem(
+        const BasketItem(movie: testMovie2, quantity: 1),
+      );
+
+      BasketRepository.instance.addItem(
+        const BasketItem(movie: testMovie3, quantity: 1),
+      );
+
+      await tester.pumpWidget(const MaterialApp(home: BasketView()));
+
+      // Check that all three movies appear.
+      expect(find.textContaining('Test Movie,'), findsOneWidget);
+      expect(find.textContaining('Test Movie 2,'), findsOneWidget);
+      expect(find.textContaining('Test Movie 3,'), findsOneWidget);
+
+      // Delete the second movie.
+      await tester.tap(
+        find.byKey(const Key('delete-button-1')),
+      );
+
+      await tester.pumpAndSettle();
+
+    // Check that only the first and third movies remain.
+      expect(find.textContaining('Test Movie 2,'), findsNothing);
+      expect(find.textContaining('Test Movie,'), findsOneWidget);
+      expect(find.textContaining('Test Movie 3,'), findsOneWidget);
+
+      expect(BasketRepository.instance.getItems(), hasLength(2));
     });
   });
 }

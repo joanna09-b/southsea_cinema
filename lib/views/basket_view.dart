@@ -212,6 +212,7 @@ class _BasketViewState extends State<BasketView> {
             height: 48,
             color: cinemaBrand,
             child: IconButton(
+              key: Key('delete-button-$index'),
               icon: const Icon(Icons.delete, color: Colors.white),
               onPressed: () {
                 setState(() {
