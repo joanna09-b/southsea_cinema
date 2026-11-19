@@ -7,18 +7,6 @@ import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/models/booking.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
 
-const TextStyle _bodyStyle = TextStyle(color: cinemaFontWhite, fontSize: 16);
-const TextStyle _boldStyle = TextStyle(
-  color: cinemaFontWhite,
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-);
-const TextStyle _brandStyle = TextStyle(
-  color: cinemaBrand,
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-);
-
 class BasketView extends StatefulWidget {
   const BasketView({super.key});
 
@@ -32,6 +20,21 @@ class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
 
   late Future<List<Booking>> _bookings;
+
+  TextStyle _bodyStyle(BuildContext context) {
+    return Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 16) ??
+        const TextStyle(fontSize: 16);
+  }
+
+  TextStyle _boldStyle(BuildContext context) {
+    return _bodyStyle(context).copyWith(fontWeight: FontWeight.bold);
+  }
+
+  TextStyle _brandStyle(BuildContext context) {
+    return _boldStyle(context).copyWith(
+      color: Theme.of(context).colorScheme.primary,
+    );
+  }
 
   @override
   void initState() {
@@ -92,9 +95,9 @@ class _BasketViewState extends State<BasketView> {
         }
 
         if (snapshot.hasError) {
-          return const Text(
+          return Text(
             'Could not load previous bookings.',
-            style: _bodyStyle,
+            style: _bodyStyle(context),
           );
         }
 
@@ -104,39 +107,34 @@ class _BasketViewState extends State<BasketView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 32),
-            const Text(
+            Text(
               'PREVIOUS BOOKINGS',
               style: TextStyle(
-                color: cinemaFontWhite,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 12),
             if (bookings.isEmpty)
-              const Text(
+              Text(
                 'You have no previous bookings.',
-                style: _bodyStyle,
+                style: _bodyStyle(context),
               )
             else
               ...bookings.map(
                 (booking) => Card(
-                  color: cinemaSurface,
                   child: ListTile(
                     title: Text(
                       'Booking #${booking.bookingNumber}',
-                      style: const TextStyle(
-                        color: cinemaBrand,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: _brandStyle(context),
                     ),
                     subtitle: Text(
                       '${booking.summary}\nDate: ${booking.date}',
-                      style: _bodyStyle,
+                      style: _bodyStyle(context),
                     ),
                     trailing: Text(
                       '£${booking.total.toStringAsFixed(2)}',
-                      style: _boldStyle,
+                      style: _boldStyle(context),
                     ),
                     isThreeLine: true,
                   ),
@@ -149,26 +147,33 @@ class _BasketViewState extends State<BasketView> {
   }
 
   Widget _buildEmptyState() {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 32.0),
-        child: Text('Your basket is empty', style: _bodyStyle),
+        padding: const EdgeInsets.symmetric(vertical: 32.0),
+        child: Text('Your basket is empty', style: _bodyStyle(context)),
       ),
     );
   }
 
   Widget _buildHeaderRow() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Expanded(flex: 2, child: Text('Item', style: _boldStyle)),
-          Expanded(flex: 4, child: Text('Details', style: _boldStyle)),
+          Expanded(flex: 2, child: Text('Item', style: _boldStyle(context))),
+          Expanded(
+            flex: 4,
+            child: Text('Details', style: _boldStyle(context)),
+          ),
           Expanded(
             flex: 2,
-            child: Text('Price', style: _boldStyle, textAlign: TextAlign.right),
+            child: Text(
+              'Price',
+              style: _boldStyle(context),
+              textAlign: TextAlign.right,
+            ),
           ),
-          SizedBox(width: 56),
+          const SizedBox(width: 56),
         ],
       ),
     );
@@ -187,7 +192,10 @@ class _BasketViewState extends State<BasketView> {
         children: [
           Expanded(
             flex: 2,
-            child: Text('${item.quantity} $ticketWord', style: _brandStyle),
+            child: Text(
+              '${item.quantity} $ticketWord',
+              style: _brandStyle(context),
+            ),
           ),
           Expanded(
             flex: 4,
@@ -195,14 +203,14 @@ class _BasketViewState extends State<BasketView> {
               '${item.quantity} Standard\n'
               '${item.movie.title}, ${item.movie.date} ${item.movie.time}, '
               'Southsea Cinema Room',
-              style: _bodyStyle,
+              style: _bodyStyle(context),
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
               '£${item.lineTotal.toStringAsFixed(2)}',
-              style: _bodyStyle,
+              style: _bodyStyle(context),
               textAlign: TextAlign.right,
             ),
           ),
@@ -229,9 +237,9 @@ class _BasketViewState extends State<BasketView> {
   Widget _buildTotalRow(String label, String value, {bool emphasise = false}) {
     final TextStyle style;
     if (emphasise) {
-      style = _boldStyle;
+      style = _boldStyle(context);
     } else {
-      style = _bodyStyle;
+      style = _bodyStyle(context);
     }
 
     return Padding(
@@ -250,10 +258,9 @@ class _BasketViewState extends State<BasketView> {
     final List<Widget> children = [];
 
     children.add(
-      const Text(
+      Text(
         'MY ORDER',
         style: TextStyle(
-          color: cinemaFontWhite,
           fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
@@ -326,7 +333,7 @@ class _BasketViewState extends State<BasketView> {
           children: [
             _buildEmptyState(),
             const SizedBox(height: 12),
-            Text(_confirmationMessage, style: _boldStyle),
+            Text(_confirmationMessage, style: _boldStyle(context)),
           ],
         );
       } else {

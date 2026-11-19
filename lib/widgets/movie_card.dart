@@ -10,6 +10,8 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Padding(
@@ -38,17 +40,14 @@ class MovieCard extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   movie.description,
-                  style: const TextStyle(
-                    color: cinemaFontWhite,
-                    fontSize: 18,
-                  ),
+                  style: textTheme.bodyLarge?.copyWith(fontSize: 18),
                 ),
               ],
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'BOOK TICKETS',
-              style: TextStyle(color: cinemaFontWhite, fontSize: 18),
+              style: textTheme.titleMedium?.copyWith(fontSize: 18),
             ),
             const SizedBox(height: 16),
             Row(
@@ -57,8 +56,7 @@ class MovieCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     '${movie.date}  ${movie.time}',
-                    style:
-                        const TextStyle(color: cinemaFontWhite, fontSize: 18),
+                    style: textTheme.bodyLarge?.copyWith(fontSize: 18),
                   ),
                 ),
                 CinemaButton(

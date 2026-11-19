@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/views/settings_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
@@ -18,8 +19,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Customer Profile'), findsOneWidget);
+      expect(find.text('Appearance'), findsOneWidget);
       expect(find.byType(TextField), findsNWidgets(3));
       expect(find.byType(Switch), findsOneWidget);
+      expect(find.text('Dark mode'), findsOneWidget);
+      expect(find.text('Light mode'), findsOneWidget);
       expect(find.text('Save Settings'), findsOneWidget);
     });
 
@@ -60,6 +64,7 @@ void main() {
       expect(await prefs.getString(prefEmail), 'alex@example.com');
       expect(await prefs.getString(prefPhone), '07000 000000');
       expect(await prefs.getBool(prefNewsletter), isTrue);
+      expect(await prefs.getString(prefThemeMode), prefThemeDark);
 
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pumpWidget(const MaterialApp(home: SettingsView()));
@@ -82,6 +87,7 @@ void main() {
         prefEmail: 'alex@example.com',
         prefPhone: '07000 000000',
         prefNewsletter: true,
+        prefThemeMode: prefThemeLight,
       });
 
       await tester.pumpWidget(const MaterialApp(home: SettingsView()));
@@ -93,6 +99,28 @@ void main() {
 
       final Switch switchWidget = tester.widget<Switch>(find.byType(Switch));
       expect(switchWidget.value, isTrue);
+
+      await tester.tap(find.text('Save Settings'));
+      await tester.pumpAndSettle();
+
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      expect(await prefs.getString(prefThemeMode), prefThemeLight);
+    });
+
+    testWidgets('selecting light mode and saving persists preference', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(const MaterialApp(home: SettingsView()));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Light mode'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Save Settings'));
+      await tester.pumpAndSettle();
+
+      final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+      expect(await prefs.getString(prefThemeMode), prefThemeLight);
     });
   });
 }

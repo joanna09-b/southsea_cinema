@@ -8,11 +8,15 @@ import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
 void main() {
   setUp(() {
     BasketRepository.instance.clear();
     rootBundle.clear();
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
   });
 
   final List<Movie> movies = MovieRepository().getMovies();
@@ -25,6 +29,35 @@ void main() {
   }
 
   group('Home page tests', () {
+    testWidgets('defaults to dark theme when no preference is saved',
+        (WidgetTester tester) async {
+      useTallScreen(tester);
+      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
+
+      final MaterialApp app = tester.widget<MaterialApp>(
+        find.byType(MaterialApp),
+      );
+      expect(app.themeMode, ThemeMode.dark);
+    });
+
+    testWidgets('restores light theme from saved preference',
+        (WidgetTester tester) async {
+      SharedPreferencesAsyncPlatform.instance =
+          InMemorySharedPreferencesAsync.withData(<String, Object>{
+        prefThemeMode: prefThemeLight,
+      });
+
+      useTallScreen(tester);
+      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
+
+      final MaterialApp app = tester.widget<MaterialApp>(
+        find.byType(MaterialApp),
+      );
+      expect(app.themeMode, ThemeMode.light);
+    });
+
     testWidgets('shows title, movie cards and booking buttons',
         (WidgetTester tester) async {
       useTallScreen(tester);

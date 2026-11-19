@@ -27,13 +27,14 @@ class _MovieListingState extends State<MovieListing> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle),
       ),
       drawer: const NavDrawer(),
-      body: Container(
-        color: const Color(0xFF1C1E26),
+      body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
@@ -42,9 +43,8 @@ class _MovieListingState extends State<MovieListing> {
             children: [
               Text(
                 '${widget.movie.title} (${widget.movie.ageRating})',
-                style: const TextStyle(
-                  color: cinemaFontWhite,
-                  fontSize: 24,
+                style: textTheme.headlineSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -55,11 +55,9 @@ class _MovieListingState extends State<MovieListing> {
                 'Please note that discounts / membership benefits will be applied once you have selected your tickets.',
               ),
               const Text('Select Quantities (Up to 5 in total)'),
-              const Text(
+              Text(
                 'Tickets',
-                style: TextStyle(
-                  color: cinemaFontWhite,
-                  fontSize: 24,
+                style: textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -68,12 +66,6 @@ class _MovieListingState extends State<MovieListing> {
                   DropdownMenu<int>(
                     initialSelection: 0,
                     width: 100,
-                    textStyle:
-                        const TextStyle(color: Color.fromARGB(255, 17, 16, 16)),
-                    inputDecorationTheme: const InputDecorationTheme(
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
                     onSelected: (int? value) {
                       if (value != null) {
                         setState(() {

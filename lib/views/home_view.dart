@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
       body = Center(
         child: Text(
           _errorMessage,
-          style: const TextStyle(color: cinemaFontWhite),
+          style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
       );
     } else {

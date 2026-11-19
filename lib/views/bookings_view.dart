@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/booking.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
@@ -23,13 +22,15 @@ class _BookingsViewState extends State<BookingsView> {
   }
 
   Widget _buildBookingsList(List<Booking> bookings) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     if (bookings.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Text(
             'No previous bookings found.',
-            style: TextStyle(color: cinemaFontWhite, fontSize: 16),
+            style: textTheme.bodyLarge?.copyWith(fontSize: 16),
           ),
         ),
       );
@@ -43,25 +44,23 @@ class _BookingsViewState extends State<BookingsView> {
         final Booking booking = bookings[index];
 
         return Card(
-          color: cinemaSurface,
           margin: const EdgeInsets.symmetric(vertical: 8.0),
           child: ListTile(
             title: Text(
               'Booking #${booking.bookingNumber}',
-              style: const TextStyle(
-                color: cinemaBrand,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
             subtitle: Text(
               '${booking.summary}\n'
               'Date: ${booking.date}',
-              style: const TextStyle(color: cinemaFontWhite),
+              style: textTheme.bodyMedium,
             ),
             trailing: Text(
               '£${booking.total.toStringAsFixed(2)}',
-              style: const TextStyle(
-                color: cinemaFontWhite,
+              style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -89,10 +88,10 @@ class _BookingsViewState extends State<BookingsView> {
           }
 
           if (snapshot.hasError) {
-            return const Center(
+            return Center(
               child: Text(
                 'Could not load bookings.',
-                style: TextStyle(color: cinemaFontWhite),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             );
           }

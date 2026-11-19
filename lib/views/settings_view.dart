@@ -11,7 +11,14 @@ const String prefPhone = 'user_phone';
 const String prefNewsletter = 'user_newsletter';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+  final ThemeMode initialThemeMode;
+  final ValueChanged<ThemeMode>? onThemeModeChanged;
+
+  const SettingsView({
+    super.key,
+    this.initialThemeMode = ThemeMode.dark,
+    this.onThemeModeChanged,
+  });
 
   @override
   State<SettingsView> createState() {
@@ -24,6 +31,7 @@ class _SettingsViewState extends State<SettingsView> {
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
   bool _receiveNewsletter = false;
+  ThemeMode _selectedThemeMode = ThemeMode.dark;
   String _confirmationMessage = '';
 
   @override
@@ -32,6 +40,7 @@ class _SettingsViewState extends State<SettingsView> {
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _phoneController = TextEditingController();
+    _selectedThemeMode = widget.initialThemeMode;
     _loadSettings();
   }
 
@@ -49,6 +58,7 @@ class _SettingsViewState extends State<SettingsView> {
     final String? savedEmail = await prefs.getString(prefEmail);
     final String? savedPhone = await prefs.getString(prefPhone);
     final bool? savedNewsletter = await prefs.getBool(prefNewsletter);
+    final String? savedTheme = await prefs.getString(prefThemeMode);
 
     String name = '';
     if (savedName != null) {
@@ -70,6 +80,11 @@ class _SettingsViewState extends State<SettingsView> {
       newsletter = savedNewsletter;
     }
 
+    ThemeMode selectedThemeMode = widget.initialThemeMode;
+    if (savedTheme != null) {
+      selectedThemeMode = themeModeFromPreference(savedTheme);
+    }
+
     if (!mounted) {
       return;
     }
@@ -78,6 +93,7 @@ class _SettingsViewState extends State<SettingsView> {
       _emailController.text = email;
       _phoneController.text = phone;
       _receiveNewsletter = newsletter;
+      _selectedThemeMode = selectedThemeMode;
     });
   }
 
@@ -91,6 +107,10 @@ class _SettingsViewState extends State<SettingsView> {
     await prefs.setString(prefEmail, email);
     await prefs.setString(prefPhone, phone);
     await prefs.setBool(prefNewsletter, _receiveNewsletter);
+    await prefs.setString(
+      prefThemeMode,
+      themeModeToPreference(_selectedThemeMode),
+    );
 
     final UserSettings settings = UserSettings(
       name: name,
@@ -102,6 +122,11 @@ class _SettingsViewState extends State<SettingsView> {
     if (!mounted) {
       return;
     }
+
+    if (widget.onThemeModeChanged != null) {
+      widget.onThemeModeChanged!(_selectedThemeMode);
+    }
+
     setState(() {
       _confirmationMessage = 'Settings saved for ${settings.name}';
     });
@@ -109,6 +134,8 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle),
@@ -121,11 +148,7 @@ class _SettingsViewState extends State<SettingsView> {
           children: [
             const Text(
               'Customer Profile',
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             TextField(
@@ -159,10 +182,10 @@ class _SettingsViewState extends State<SettingsView> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Receive news and offers by email',
-                    style: TextStyle(color: cinemaFontWhite),
+                    style: textTheme.bodyMedium,
                   ),
                 ),
                 Switch(
@@ -174,6 +197,34 @@ class _SettingsViewState extends State<SettingsView> {
                   },
                 ),
               ],
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Appearance',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            RadioGroup<ThemeMode>(
+              groupValue: _selectedThemeMode,
+              onChanged: (ThemeMode? value) {
+                if (value == null) {
+                  return;
+                }
+                setState(() {
+                  _selectedThemeMode = value;
+                });
+              },
+              child: Column(
+                children: const [
+                  RadioListTile<ThemeMode>(
+                    title: Text('Dark mode'),
+                    value: ThemeMode.dark,
+                  ),
+                  RadioListTile<ThemeMode>(
+                    title: Text('Light mode'),
+                    value: ThemeMode.light,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -187,8 +238,8 @@ class _SettingsViewState extends State<SettingsView> {
               const SizedBox(height: 12),
               Text(
                 _confirmationMessage,
-                style: const TextStyle(
-                  color: cinemaFontWhite,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
