@@ -2,6 +2,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Southsea Cinema (Android Emulator)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
+    {
       "name": "Southsea Cinema (Edge)",
       "request": "launch",
       "type": "dart",
