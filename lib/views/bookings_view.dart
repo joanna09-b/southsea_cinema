@@ -47,7 +47,7 @@ class _BookingsViewState extends State<BookingsView> {
           margin: const EdgeInsets.symmetric(vertical: 8.0),
           child: ListTile(
             title: Text(
-              'Booking #${booking.bookingNumber}',
+              'Booking booking.bookingNumber',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
